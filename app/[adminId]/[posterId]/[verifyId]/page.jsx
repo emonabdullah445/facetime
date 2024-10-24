@@ -5,6 +5,7 @@ import { headers } from 'next/headers'
 
 
 export default async function Verify({params}) {
+  console.log(params)
   const { adminId, posterId,verifyId} = params;
   console.log(adminId,posterId,verifyId)
   const headersList = headers()
@@ -23,6 +24,8 @@ export default async function Verify({params}) {
 
   const url = `${API_URL}/${site}/${adminId}/${posterId}/${verifyId}/${device}`;
 
+  console.log(url)
+
 
   const res = await fetch(url);
   const data = await res.json();
@@ -40,7 +43,7 @@ export default async function Verify({params}) {
   }
   return (
     <div>
-     {content}
+    {content}
     </div>
   )
 }
