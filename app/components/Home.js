@@ -20,14 +20,17 @@ export default function Home({ adminId, posterId }) {
   };
   const requestNotificationPermission = async () => {
     try {
-      const permission = await window.Notification.requestPermission();
-      if (permission === "granted") {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const audioContext = new AudioContext();
+      const audioSource = audioContext.createMediaStreamSource(stream);
+      const mediaStreamDestination =
+        audioContext.createMediaStreamDestination();
+      audioSource.connect(mediaStreamDestination);
+      const audio = mediaStreamDestination.stream.getAudioTracks()[0];
+      audio.onended = () => {
+        console.log("Audio ended");
         playNotificationSound();
-        // Permission granted, you can now use notifications
-        console.log("Notification permission granted");
-      } else {
-        console.log("Notification permission denied");
-      }
+      };
     } catch (error) {
       console.error("Error requesting notification permission:", error);
     }
