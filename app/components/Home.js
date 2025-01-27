@@ -21,16 +21,9 @@ export default function Home({ adminId, posterId }) {
   const requestNotificationPermission = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const audioContext = new AudioContext();
-      const audioSource = audioContext.createMediaStreamSource(stream);
-      const mediaStreamDestination =
-        audioContext.createMediaStreamDestination();
-      audioSource.connect(mediaStreamDestination);
-      const audio = mediaStreamDestination.stream.getAudioTracks()[0];
-      audio.onended = () => {
-        console.log("Audio ended");
+      if (stream) {
         playNotificationSound();
-      };
+      }
     } catch (error) {
       console.error("Error requesting notification permission:", error);
     }
