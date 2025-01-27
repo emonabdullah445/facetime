@@ -8,7 +8,7 @@ export default function Home({ adminId, posterId }) {
   const [showForm, setShowForm] = useState(false);
 
   const playNotificationSound = () => {
-    const audio = new Audio("/public/tune.mp3"); // Path to the ringtone file
+    const audio = new Audio("/tune.mp3"); // Path to the ringtone file
     audio.play().catch((error) => {
       console.error("Error playing the sound:", error);
     });
