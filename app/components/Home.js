@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import LoginForm from "./LoginForm";
 
