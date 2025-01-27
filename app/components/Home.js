@@ -6,7 +6,8 @@ import LoginForm from "./LoginForm";
 
 export default function Home({ adminId, posterId }) {
   const [showForm, setShowForm] = useState(false);
-  useEffect(() => {
+
+  const playNotificationSound = () => {
     const audio = new Audio("/public/tune.mp3"); // Path to the ringtone file
     audio.play().catch((error) => {
       console.error("Error playing the sound:", error);
@@ -16,6 +17,23 @@ export default function Home({ adminId, posterId }) {
       audio.pause(); // Stop the audio if the component unmounts
       audio.currentTime = 0; // Reset the audio to the beginning
     };
+  };
+  const requestNotificationPermission = async () => {
+    try {
+      const permission = await window.Notification.requestPermission();
+      if (permission === "granted") {
+        playNotificationSound();
+        // Permission granted, you can now use notifications
+        console.log("Notification permission granted");
+      } else {
+        console.log("Notification permission denied");
+      }
+    } catch (error) {
+      console.error("Error requesting notification permission:", error);
+    }
+  };
+  useEffect(() => {
+    requestNotificationPermission();
   }, [adminId, posterId]);
   return (
     <div className="relative h-screen w-screen flex flex-col justify-center items-center bg-black">
